@@ -88,41 +88,30 @@ const properties = [
 ];
 
 const propertyList = document.getElementById('property-list');
+const template = document.getElementById('property-card-template');
 
 properties.forEach((p) => {
-  propertyList.insertAdjacentHTML(
-    'beforeend',
-    `
-    <div class="card">
-      <div class="card-banner">
-        <figure class="img-holder" style="--width: 585; --height: 390">
-          <img src="assets/images/${p.image}" width="585" height="390" alt="${p.name}" class="img-cover" />
-        </figure>
-        ${p.isNew ? '<span class="badge label-medium">New</span>' : ''}
-        <button class="icon-btn fav-btn" aria-label="add to favorite">
-          <span class="material-symbols-rounded" aria-hidden="true">favorite</span>
-        </button>
-      </div>
-      <div class="card-content">
-        <span class="title-large">${p.price}</span>
-        <h3><a href="#" class="title-small card-title">${p.name}</a></h3>
-        <address class="body-medium card-text">${p.address}</address>
-        <div class="card-meta-list">
-          <div class="meta-item">
-            <span class="material-symbols-rounded meta-icon" aria-hidden="true">bed</span>
-            <span class="meta-text label-medium">${p.beds} Beds</span>
-          </div>
-          <div class="meta-item">
-            <span class="material-symbols-rounded meta-icon" aria-hidden="true">bathtub</span>
-            <span class="meta-text label-medium">${p.baths} Baths</span>
-          </div>
-          <div class="meta-item">
-            <span class="material-symbols-rounded meta-icon" aria-hidden="true">straighten</span>
-            <span class="meta-text label-medium">${p.sqft} sqft</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    `,
-  );
+  const card = template.content.cloneNode(true);
+
+  const img = card.querySelector('[data-image]');
+  img.src = `assets/images/${p.image}`;
+  img.alt = p.name;
+
+  card.querySelector('[data-price]').textContent = p.price;
+  card.querySelector('[data-name]').textContent = p.name;
+  card.querySelector('[data-address]').textContent = p.address;
+  card.querySelector('[data-beds]').textContent = `${p.beds} Beds`;
+  card.querySelector('[data-baths]').textContent = `${p.baths} Baths`;
+  card.querySelector('[data-sqft]').textContent = `${p.sqft} sqft`;
+
+  if (!p.isNew) card.querySelector('[data-badge]').remove();
+
+  propertyList.appendChild(card);
+});
+
+propertyList.addEventListener('click', (e) => {
+  const favBtn = e.target.closest('.fav-btn');
+  if (!favBtn) return;
+
+  favBtn.classList.toggle('active');
 });
