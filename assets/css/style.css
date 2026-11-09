@@ -27,6 +27,8 @@
   --neutral-5: #0c0c0d;
   --error-100: #ff2134;
 
+  --gradient: linear-gradient(270deg, #0f4392 0%, #001d3d 100%);
+
   --font-primary: 'Montserrat', sans-serif;
 
   --fs-base: 62.5%;
@@ -407,7 +409,134 @@ body {
 /*-----------------------------------*\
   #HERO
 \*-----------------------------------*/
+.hero-banner {
+  display: none;
+}
+.hero {
+  position: relative;
+  background-image: var(--gradient);
+  color: var(--neutral-90);
+  padding-block: 130px 60px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero-title {
+  color: var(--neutral-100);
+}
+.hero-text {
+  margin-block: 16px 32px;
+}
+.search-bar {
+  background-color: var(--white);
+  display: grid;
+  padding: 8px;
+  gap: 8px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-4);
+}
+.search-item {
+  position: relative;
+  color: var(--neutral-50);
+}
+.search-item .search-item-field {
+  height: 76px;
+  padding: 40px 16px 12px;
+  border-radius: var(--radius-medium);
+  transition: var(--transition-duration-quick) var(--transition-easing-quick);
+  cursor: pointer;
+}
+.search-item .search-item-field:where(:hover, :focus) {
+  background-color: var(--neutral-95);
+}
+.search-item :where(.label, .material-symbols-rounded) {
+  position: absolute;
+  pointer-events: none;
+}
+.search-item .label {
+  top: 12px;
+  left: 16px;
+  color: var(--neutral-5);
+}
+.search-item .material-symbols-rounded {
+  top: 50%;
+  right: 16px;
+  translate: 0 -50%;
+  color: var(--primary-100);
+}
+.search-btn {
+  background: var(--primary-100);
+  color: var(--neutral-100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+  padding-inline: 24px;
+  gap: 12px;
+  border-radius: var(--radius-medium);
+  transition: var(--transition-duration-quick) var(--transition-easing-quick);
+}
+.search-btn:where(:hover, :focus) {
+  background-color: var(--primary-80);
+}
+.search-btn:where(:active, :focus-visible) {
+  background-color: var(--primary-70);
+}
+.hero .bg-pattern {
+  position: absolute;
+  top: 50%;
+  left: 25px;
+  right: 0;
+  translate: 0 -50%;
+  min-height: 100%;
+  pointer-events: none;
+  z-index: -2;
+}
+@supports (appearance: base-select) {
+  /* opt in: both the select and its popup */
+  .search-item select,
+  .search-item select::picker(select) {
+    appearance: base-select;
+  }
 
+  /* hide the default arrow, you already have your own icon */
+  .search-item select::picker-icon {
+    display: none;
+  }
+
+  /* the dropdown panel */
+  .search-item select::picker(select) {
+    margin-top: 8px;
+    padding: 8px;
+    border: none;
+    border-radius: var(--radius-medium);
+    background-color: var(--white);
+    box-shadow: var(--shadow-4);
+  }
+
+  /* each item */
+  .search-item select option {
+    padding: 12px 16px;
+    border-radius: var(--radius-small);
+    color: var(--neutral-30);
+    cursor: pointer;
+    transition: var(--transition-duration-quick) var(--transition-easing-quick);
+  }
+
+  .search-item select option:where(:hover, :focus-visible) {
+    background-color: var(--neutral-95);
+  }
+
+  /* the selected item */
+  .search-item select option:checked {
+    color: var(--primary-100);
+    font-weight: var(--weight-semiBold);
+  }
+
+  /* hide the default checkmark */
+  .search-item select option::checkmark {
+    display: none;
+  }
+}
 /*-----------------------------------*\
   #PROPERTY
 \*-----------------------------------*/
