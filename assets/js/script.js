@@ -115,3 +115,38 @@ propertyList.addEventListener('click', (e) => {
 
   favBtn.classList.toggle('active');
 });
+
+const stories = [
+  { name: 'Chris Traeger', rating: 5.0 },
+  { name: 'Duke Silver', rating: 5.0 },
+  { name: 'Tsukasa Aoi', rating: 5.0 },
+  { name: 'Freida Varnes', rating: 5.0 },
+  { name: 'Carl Lorthner', rating: 5.0 },
+  { name: 'Marci Senter', rating: 5.0 },
+];
+
+const list = document.getElementById('story-list');
+const storyTemplate = document.getElementById('story-template');
+
+const starHTML = '<span class="material-symbols-rounded" aria-hidden="true">star</span>';
+
+stories.forEach((story, i) => {
+  const n = i + 1;
+  const card = storyTemplate.content.cloneNode(true);
+
+  card.querySelector('.story-card').style.backgroundImage = `url(./assets/images/story-${n}.jpg)`;
+
+  card.querySelector('.title-small').textContent = story.name;
+
+  card.querySelector('.stars').outerHTML = starHTML.repeat(Math.round(story.rating));
+
+  const data = card.querySelector('data');
+  data.value = story.rating.toFixed(1);
+  data.textContent = story.rating.toFixed(1);
+
+  const img = card.querySelector('img');
+  img.src = `./assets/images/avatar-${n}.jpg`;
+  img.alt = story.name;
+
+  list.appendChild(card);
+});
