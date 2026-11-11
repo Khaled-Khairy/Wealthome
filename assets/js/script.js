@@ -3,12 +3,27 @@
 const $navbar = document.querySelector('[data-navbar]');
 const $navbarToggler = document.querySelector('[data-navbar-toggler]');
 
-$navbarToggler.addEventListener('click', () => $navbar.classList.toggle('active'));
+$navbarToggler.addEventListener('click', () => {
+  $navbar.classList.toggle('active');
+  $navbarToggler.classList.toggle('active');
+});
 
 const $header = document.querySelector('[data-header]');
 
 window.addEventListener('scroll', (e) => {
   $header.classList.toggle('active', window.scrollY > 50);
+});
+
+// Active nav link on click
+const $navLinks = document.querySelectorAll('.navbar_link');
+$navLinks.forEach((link) => {
+  link.addEventListener('click', () => {
+    $navLinks.forEach((l) => l.classList.remove('active'));
+    link.classList.add('active');
+    // close mobile menu after clicking
+    $navbar.classList.remove('active');
+    $navbarToggler.classList.remove('active');
+  });
 });
 
 const properties = [
@@ -145,7 +160,7 @@ stories.forEach((story, i) => {
   data.textContent = story.rating.toFixed(1);
 
   const img = card.querySelector('img');
-  img.src = `./assets/images/avatar-${n}.jpg`;
+  img.src = `./assets/images/story-avatar-${n}.jpg`;
   img.alt = story.name;
 
   list.appendChild(card);
